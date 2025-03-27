@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transfer Metrics Table</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-tab" onclick="switchTab('euroRail.html')">EuroRail</div>
+        <div class="nav-tab" onclick="switchTab('sightSeeing.html')">SightSeeing</div>
+        <div class="nav-tab active-tab" onclick="switchTab('transfer.html')">Transfer</div>
+        <div class="nav-tab" onclick="switchTab('carRental.html')">CarRental</div>
+    </div>
+    <div class="input-container">
+        <label><b>Enter Data (4 Values for Each Category):</b></label>
+        <input type="text" id="last7Days" placeholder="Last 7 Days">
+        <input type="text" id="lastWeek" placeholder="Same Day Last Week">
+        <input type="text" id="yesterday" placeholder="Yesterday">
+        <button class="btn calculate-btn" onclick="getInputsAndCalculate(4,metrics,'transferTable')">Calculate</button>
+        <!-- <button class="btn export-btn" onclick="exportToExcel('transferTable')">Export to Excel</button> -->
+    </div>
+    <table id="transferTable">
+        <thead>
+            <tr>
+                <th>Metric</th>
+                <th>Last 7 Days - Avg</th>
+                <th>Same Day Last Week (T-8)</th>
+                <th>Yesterday (T-1)</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script>
+        const metrics = [
+            "Transfer Booking Attempts",
+            "Transfer Booking Count",
+            "Transfer Booking Failure Count",
+            "Transfer Booking Failure %",
+            "Transfer Search Availability Attempts",
+            "Transfer Search Availability Failure Count",
+            "Transfer Search Availability Failure %",
+            "Transfer L2B%"
+        ];
+        function calculateMetrics(arr, x) {
+            let map = {
+                "tbohss": arr[0], "tbohfs": arr[1], "tbohbs": arr[2], "tbohbf": arr[3]
+            };
+            
+            let ans = [];
+            ans[0] = (map["tbohbs"] + map["tbohbf"]) * 1;
+            ans[1] = (map["tbohbs"]) * 1;
+            ans[2] = (map["tbohbf"]) * 1;
+            ans[3] = (ans[2] / ans[0]) * 100;
+            ans[4] = map["tbohss"] + map["tbohfs"];
+            ans[5] = map["tbohfs"];
+            ans[6] = (ans[5] / ans[4]) * 100;
+            ans[7] = (ans[1] / (ans[4] - ans[5])) * 100;
+            
+            for (let i = 0; i < 8; i++) {
+                if (x == 1 && metrics[i][metrics[i].length-1]!='%') {
+                    ans[i] /= 7;
+                }
+                ans[i] = Math.round(ans[i] * 100) / 100;
+            }
+            return ans;
+        }
+        
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

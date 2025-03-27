@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarRental Metrics Table</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-tab" onclick="switchTab('euroRail.html')">EuroRail</div>
+        <div class="nav-tab" onclick="switchTab('sightSeeing.html')">SightSeeing</div>
+        <div class="nav-tab" onclick="switchTab('transfer.html')">Transfer</div>
+        <div class="nav-tab active-tab" onclick="switchTab('carRental.html')">CarRental</div>
+    </div>
+    <div class="input-container">
+        <label><b>Enter Data (12 Values for Each Category):</b></label>
+        <input type="text" id="last7Days" placeholder="Last 7 Days">
+        <input type="text" id="lastWeek" placeholder="Same Day Last Week">
+        <input type="text" id="yesterday" placeholder="Yesterday">
+        <button class="btn calculate-btn" onclick="getInputsAndCalculate(12,metrics,'carTable')">Calculate</button>
+        <!-- <button class="btn export-btn" onclick="exportToExcel('carTable')">Export to Excel</button> -->
+    </div>
+    <table id="carTable">
+        <thead>
+            <tr>
+                <th>Metric</th>
+                <th>Last 7 Days - Avg</th>
+                <th>Same Day Last Week (T-8)</th>
+                <th>Yesterday (T-1)</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <script>
+        const metrics = [
+            "Car Booking Attempts",
+            "Car Booking Count",
+            "Car Booking Failure Count",
+            "Car Booking Failure %",
+            "Car Prebook Attempt Count",
+            "Car Prebook Failure Count",
+            "Car Prebook Failure %",
+            "Car Search Availability Attempts",
+            "Car Search Availability Failure Count",
+            "Car Search Availability Failure %",
+            "CarRental L2B %"
+        ];
+        function calculateMetrics(arr, x) {
+            let map = {
+                "tbohss": arr[0], "tbohsf": arr[1], "tbohbs": arr[2], "tbohbf": arr[3],
+                "tbohpb": arr[4], "tbohpbf": arr[5], "tboiss": arr[6], "tboisf": arr[7],
+                "tboibs": arr[8], "tboibf": arr[9], "tboipb": arr[10], "tboipbf": arr[11]
+            };
+            
+            let ans = [];
+            ans[0] = (map["tbohbs"] + map["tbohbf"] + map["tboibs"] + map["tboibf"]) * 1;
+            ans[1] = (map["tbohbs"] + map["tboibs"]) * 1;
+            ans[2] = (map["tbohbf"] + map["tboibf"]) * 1;
+            ans[3] = (ans[2] / ans[0]) * 100;
+            ans[4] = map["tbohpb"] + map["tboipb"];
+            ans[5] = map["tbohpbf"] + map["tboipbf"];
+            ans[6] = (ans[5] / ans[4]) * 100;
+            ans[7] = map["tbohss"] + map["tbohsf"] + map["tboiss"] + map["tboisf"];
+            ans[8] = map["tbohsf"] + map["tboisf"];
+            ans[9] = (ans[8] / ans[7]) * 100;
+            ans[10] = (ans[1] / (ans[7] - ans[8])) * 100;
+            
+            for (let i = 0; i < 11; i++) {
+                if (x == 1 && metrics[i][metrics[i].length-1]!='%') {
+                    ans[i] /= 7;
+                }
+                ans[i] = Math.round(ans[i] * 100) / 100;
+            }
+            return ans;
+        }
+        
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
