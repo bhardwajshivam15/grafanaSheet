@@ -14,6 +14,7 @@
         <div class="nav-tab active-tab" onclick="switchTab('transfer.html')">Transfer</div>
         <div class="nav-tab" onclick="switchTab('carRental.html')">CarRental</div>
     </div>
+    <div id="dateBanner" class="date-banner"></div>
     <div class="input-container">
         <label><b>Enter Data (4 Values for Each Category):</b></label>
         <input type="text" id="last7Days" placeholder="Last 7 Days">
@@ -67,7 +68,26 @@
             }
             return ans;
         }
-        
+        function getUTCDate(daysAgo) {
+    let date = new Date();
+    date.setUTCDate(date.getUTCDate() - daysAgo);
+    return date.toISOString().split('T')[0];
+}
+
+function updateDateBanner() {
+    let t8 = getUTCDate(8);
+    let t1 = getUTCDate(1);
+    let t7 = getUTCDate(7);
+    let t7_t1 = `${t7} → ${t1}`;
+    
+    document.getElementById("dateBanner").innerHTML = `
+        <b>Date Ranges (UTC):</b>
+        <br> T-8: ${t8}
+        <br> T-1: ${t1}
+        <br> T-7 → T-1: ${t7_t1}
+    `;
+}
+        updateDateBanner();
     </script>
     <script src="script.js"></script>
 </body>
