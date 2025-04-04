@@ -60,6 +60,71 @@ body {
     }
 }
 
+.disclaimer {
+    background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+    border-left: 5px solid #ff9800;
+    padding: 16px;
+    margin: 20px auto;
+    width: 90%;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+}
+
+.disclaimer-header {
+    font-size: 18px;
+    font-weight: bold;
+    color: #d97706;
+    margin-bottom: 6px;
+}
+
+.disclaimer-text {
+    color: #555;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.disclaimer-content {
+    background: #fff;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px dashed #ff9800;
+    font-size: 13px;
+    color: #333;
+    font-weight: 500;
+    line-height: 1.6;
+    word-spacing: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.copy-btn {
+    background-color: #ff9800;
+    border: none;
+    padding: 8px 12px;
+    font-size: 13px;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.copy-btn:hover {
+    background-color: #e68900;
+    transform: scale(1.05);
+}
+
+
 
 table {
     width: 60%;

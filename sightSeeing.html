@@ -15,6 +15,18 @@
         <div class="nav-tab" onclick="switchTab('carRental.html')">CarRental</div>
     </div>
     <div id="dateBanner" class="date-banner"></div>
+    <div class="disclaimer">
+        <div class="disclaimer-header">⚠️ Important Input Order</div>
+        <p class="disclaimer-text">
+            Please enter values in this exact order, separated by commas:
+        </p>
+        <div class="disclaimer-content">
+            <span id="disclaimer-data">
+                TBOHBooking_Success, TBOHBooking_Failure, TBOHTotal_Prebook, TBOHPrebook_Failure, TBOHSearch_Success, TBOHSearch_Failure,
+                TBOIBooking_Success, TBOIBooking_Failure, TBOITotal_Prebook, TBOIPrebook_Failure, TBOISearch_Success, TBOISearch_Failure
+            </span>
+        </div>
+    </div>
     <div class="input-container">
         <label><b>Enter Data (12 Values for Each Category):</b></label>
         <input type="text" id="last7Days" placeholder="Last 7 Days">
